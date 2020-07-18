@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import ChatMessages from './components/ChatMessagesComponent';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-export default App;
+    this.state = {
+      chatMessages: [{
+        text: "Bok, ja sam Vedran!",
+        member: {
+          color: "blue",
+          username: "Vedran"
+        }
+      }],
+      chatMember: {
+        username: this.randomizeUsername,
+        color: this.randomizeBgColor
+      }
+    }
+  }
+
+  randomizeUsername = () => {
+    const username = 'User-' + (Math.floor(Math.random() * 7));
+    return username;
+  }
+
+  randomizeBgColor = () => {
+    const color = '#' + (Math.floor(Math.random() * 0xCCCCCC).toString(16));
+    return color;
+  }
+  
+  render() {
+    return (
+      <div className="App">
+        <ChatMessages messages={this.state.chatMessages} currentMember={this.state.chatMember} />
+      </div>
+    );
+  }
+}
