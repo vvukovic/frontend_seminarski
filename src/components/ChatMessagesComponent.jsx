@@ -1,30 +1,34 @@
 import React from 'react';
 
-export default function ChatMessages({ messages, currentMember }) {
-  const myMessage = messages.map(m => m).id === currentMember.id;
-  const className = myMessage ?
-    "Messages-message currentMember" : "Messages-message";
-
-  return (
-
-    <>
-      <ul>
-        {messages.map((msg, index) => {
-          return (
-            <li className={className} key={index}>
-              <span
-                className="avatar" style={{ backgroundColor: msg.member.color }}
-              />
-              <div className="Message-content">
-                <div className="username">
-                  {msg.member.username}
-                </div>
-                <div className="text">{msg.text}</div>
-              </div>
-            </li>
-          )
-        })}
+export default class ChatMessages extends React.Component {
+  render() {
+    const { messages } = this.props;
+    return (
+      <ul className="Messages-list">
+        {messages.map((m, idx) => this.printMessage(m, idx))}
       </ul>
-    </>
-  );
+    );
+  }
+
+  printMessage(message, idx) {
+    const { member, text } = message;
+    const { currentMember } = this.props;
+    const myMessage = member.id === currentMember.id;
+    const className = myMessage ?
+      "Messages-message currentMember" : "Messages-message";
+    return (
+      <li className={className} key={idx}>
+        <span
+          className="avatar"
+          style={{ backgroundColor: member.clientData.color }}
+        />
+        <div className="Message-content">
+          <div className="username">
+            {member.clientData.username}
+          </div>
+          <div className="text">{text}</div>
+        </div>
+      </li>
+    );
+  }
 }
