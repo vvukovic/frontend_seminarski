@@ -61,7 +61,6 @@ export default class App extends React.Component {
   };
 
   state = {
-    data: '',
     messages: [],
     member: {
       username: Helper.RandomizeUsername(),
