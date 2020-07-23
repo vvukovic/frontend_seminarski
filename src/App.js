@@ -51,6 +51,10 @@ export default class App extends React.Component {
     room.on('member_leave', ({ id }) => {
       const index = members.findIndex(member => member.id === id);
       members.splice(index, 1);
+      this.setState({
+        members: members
+      });
+      console.log("Clan s ID-om (" + id + ") je otisao iz chata");
     });
 
     room.on('data', (data, member) => {
